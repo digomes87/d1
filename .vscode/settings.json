@@ -1,8 +1,0 @@
-{
-    "python.pythonPath": "/Users/dgomes/.virtualenvs/d1/bin/python",
-    "python.formatting.provider": "black",
-    "python.linting.pylintEnabled": true,
-    "python.linting.enabled": true,
-    "python.linting.pycodestyleEnabled": true,
-    "python.linting.pycodestyleArgs": ["--max-line-length=79"],
-}
