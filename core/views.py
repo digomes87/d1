@@ -1,8 +1,11 @@
-from django import template
+from django import forms, template
 from django.shortcuts import render, get_object_or_404
 from .models import Produto
 from django.http import HttpResponse
 from django.template import loader
+from .forms import ContatoForm
+from django.contrib import messages
+
 
 def index(request):
     produtos = Produto.objects.all()
@@ -15,14 +18,29 @@ def index(request):
 
 
 def contato(request):
-    return render(request, 'core/contato.html')
+    # validando envido do fomulario
+    form = ContatoForm(request.POST or None)
+    if str(request.method) == 'POST':
+        if form.is_valid():
+            # nome = forms.cleaned_data['nome']
+            # email = forms.cleaned_data['email']
+            # assunto = forms.cleaned_data['assunto']
+            # menssage = forms.cleaned_data['menssagem']
+
+            messages.success(request, 'E-mail enviado com Sucesso')
+            form = ContatoForm()
+        else:
+            messages.error(request, 'Deu ruim nesse envio do formulario !')
+    context = {
+        'form': form
+    }
+    return render(request, 'core/contato.html', context)
+
 
 def produto(request, pk):
     try:
         prod = Produto.objects.get(pk=pk)
-        context = {
-        'produto': prod
-        }
+        context = {'produto': prod}
     except get_object_or_404(Produto, id=pk):
         raise print('Error in get page 404')
 
@@ -31,9 +49,10 @@ def produto(request, pk):
 
 def error404(request, exception):
     template = loader.get_template('error/404.html')
-    return HttpResponse(content=template.render(), 
+    return HttpResponse(content=template.render(),
                         content_type='text/html; charset=utf8',
                         status=404)
+
 
 def error500(request):
     template = loader.get_template('error/500.html')

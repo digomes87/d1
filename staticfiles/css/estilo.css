@@ -5,6 +5,9 @@
 }; */
 
 body {
+    padding: 15px;
     background-color: #1e212d;
     color: #fff;
+    display: flex;
+    align-items: center;
 }

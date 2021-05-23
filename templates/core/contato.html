@@ -1,4 +1,14 @@
 {% extends 'base.html' %}
+{% load bootstrap4 %}
 {% block content %}
-    Contato
+    <h1>Contato</h1>
+    <!-- esse boostrap_message é necessario para aparecer a messagem do formulario django -->
+    {% bootstrap_messages %}
+    <form action="{% url 'contato' %}" method="POST" class="form">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% buttons %}
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        {% endbuttons %} 
+    </form>   
 {% endblock %}
